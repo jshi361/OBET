@@ -17,29 +17,29 @@ from ..models import User, Role, Lit
 
 # Login
 class LoginForm(Form):
-	email = StringField('Email', validators=[Required(), Length(1, 64), Email()])
- 	password = PasswordField('Password', validators=[Required()])
- 	remember_me = BooleanField('Keep me logged in')
- 	submit = SubmitField('Log In')
+    email = StringField('Email', validators=[Required(), Length(1, 64), Email()])
+    password = PasswordField('Password', validators=[Required()])
+    remember_me = BooleanField('Keep me logged in')
+    submit = SubmitField('Log In')
 
 # Registration
 class RegistrationForm(Form):
-	email = StringField('Email', validators=[Required(), Length(1, 64), Email()])
- 	name = StringField('Name', validators=[Required(), Length(1, 64)])
- 	password = PasswordField('Password', validators=[Required(), EqualTo('password2', message='Passwords must match.')])
- 	password2 = PasswordField('Confirm password', validators=[Required()])
- 	reason = TextAreaField('Reason for wanting to join', validators=[Required()])
- 	submit = SubmitField('Register')
- 
+    email = StringField('Email', validators=[Required(), Length(1, 64), Email()])
+    name = StringField('Name', validators=[Required(), Length(1, 64)])
+    password = PasswordField('Password', validators=[Required(), EqualTo('password2', message='Passwords must match.')])
+    password2 = PasswordField('Confirm password', validators=[Required()])
+    reason = TextAreaField('Reason for wanting to join', validators=[Required()])
+    submit = SubmitField('Register')
+
     # Check if the email provided exist in the database already
- 	def validate_email(self, field):
- 		if User.objects(email__iexact=field.data).first():
- 			raise ValidationError('Email already registered.')
+    def validate_email(self, field):
+        if User.objects(email__iexact=field.data).first():
+            raise ValidationError('Email already registered.')
 
 # Rejected user reason form
 class ReasonForm(Form):
-	reason = StringField('Reasoning')
-	submit = SubmitField('Submit')
+    reason = StringField('Reasoning')
+    submit = SubmitField('Submit')
 
 # User change password
 class ChangePasswordForm(Form):

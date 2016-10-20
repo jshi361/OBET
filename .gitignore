@@ -3,3 +3,6 @@ venv/
 Procfile
 Procfile.txt
 .gitignore
+app/client_secret.json
+.DS_store
+env/

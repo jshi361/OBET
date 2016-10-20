@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from flask.ext.bootstrap import Bootstrap
+from flask_bootstrap import Bootstrap
 from flask.ext.mail import Mail
 from flask.ext.moment import Moment
 from flask.ext.mongoengine import MongoEngine
@@ -29,21 +29,38 @@ def create_app(config_name):
         'db': app.config['MONGO_DBNAME'],
         'host': app.config['MONGO_URI']
     }
-    config[config_name].init_app(app)   
+    config[config_name].init_app(app)
     bootstrap.init_app(app)
     mail.init_app(app)
     moment.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
 
+# additional _init_.py file in each of these modules
     from main import main as main_blueprint
     app.register_blueprint(main_blueprint)
-    
+
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
+
+    from .browse import browse as browse_blueprint
+    app.register_blueprint(browse_blueprint)
+
+    from .literature import lit as lit_blueprint
+    app.register_blueprint(lit_blueprint)
+
+    from .preferences import pref as pref_blueprint
+    app.register_blueprint(pref_blueprint)
+
+    from .search import search as search_blueprint
+    app.register_blueprint(search_blueprint)
+
+    from .user import user as user_blueprint
+    app.register_blueprint(user_blueprint)
+
  # attach routes and custom error pages here
     return app
- 
+
 
 # Actually connects to the DB
 def connect_db():

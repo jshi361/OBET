@@ -1,8 +1,9 @@
 #######################################
-# Database models 
+# Database models
 #######################################
 
 # Import mongoengine and flask modules
+from math import ceil
 from flask import current_app, request, url_for
 from flask.ext.mongoengine.wtf import model_form
 from flask.ext.wtf import Form
@@ -18,7 +19,39 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 from . import db
 
-# Embedded document 
+class Pagination(object):
+
+    def __init__(self, page, per_page, total_count):
+        self.page = page
+        self.per_page = per_page
+        self.total_count = total_count
+
+    @property
+    def pages(self):
+        return int(ceil(self.total_count / float(self.per_page)))
+
+    @property
+    def has_prev(self):
+        return self.page > 1
+
+    @property
+    def has_next(self):
+        return self.page < self.pages
+
+    def iter_pages(self, left_edge=2, left_current=2,
+                   right_current=5, right_edge=2):
+        last = 0
+        for num in xrange(1, self.pages + 1):
+            if num <= left_edge or \
+               (num > self.page - left_current - 1 and \
+                num < self.page + right_current) or \
+               num > self.pages - right_edge:
+                if last + 1 != num:
+                    yield None
+                yield num
+                last = num
+
+# Embedded document
 # Contains a record of a user's activity
 class UserEditRecord(db.EmbeddedDocument):
     litEdited = db.StringField(required = True)
@@ -28,7 +61,7 @@ class UserEditRecord(db.EmbeddedDocument):
 
     def __repr__(self):
         return '<UserEditRecord %s, %s>' % (self.litEdited, self.date)
-        
+
 # OBET website user
 class User(UserMixin, db.Document):
     	name = db.StringField(max_length = 30, required = True, unique = True)
@@ -45,7 +78,7 @@ class User(UserMixin, db.Document):
     	member_since = db.DateTimeField(default = datetime.datetime.now)
         last_seen = db.DateTimeField(default = datetime.datetime.now)
         u_edit_record = db.SortedListField(db.EmbeddedDocumentField(UserEditRecord), ordering="date", reverse=True, default = [])
-        # Preferences: 
+        # Preferences:
         # Boolean values of whether the user wishes to see this field in their search results
         title = db.BooleanField(default = True)
         author = db.BooleanField(default = True)
@@ -65,13 +98,13 @@ class User(UserMixin, db.Document):
         # 	 'default_language': 'english',
         # 	 'weight': {'email': 100, 'name': 50}
         # 	}
-        # ]}     
-        	
-        # To String for User obj	
+        # ]}
+
+        # To String for User obj
         # Indentation is off here
     	def __repr__(self):
  		return '<User %s, %s>' % (self.name, self.email)
- 	
+
  	def is_authenticated(self):
         	return True
 
@@ -83,7 +116,7 @@ class User(UserMixin, db.Document):
 
     	def get_id(self):
         	return unicode(self.email)
- 	
+
  	@property
  	def password(self):
  		raise AttributeError('password is not a readable attribute')
@@ -91,14 +124,14 @@ class User(UserMixin, db.Document):
  	@password.setter
  	def password(self, password):
  		self.password_hash = generate_password_hash(password)
- 
+
  	def verify_password(self, password):
  		return check_password_hash(self.password_hash, password)
- 		
+
  	def generate_confirmation_token(self, expiration=3600):
  		s = Serializer(current_app.config['SECRET_KEY'], expiration)
  		return s.dumps({'confirm': self.name})
- 
+
  	def confirm(self, token):
  		s = Serializer(current_app.config['SECRET_KEY'])
  		try:
@@ -117,7 +150,7 @@ class User(UserMixin, db.Document):
  		self.activated = True
  		self.save()
  		return True
-   
+
 	def deactivate(self):
  		if not self.activated:
  			return False
@@ -130,13 +163,13 @@ class User(UserMixin, db.Document):
  			return True
  		self.approved = True
  		self.save()
- 		return True	
-	
- 		
+ 		return True
+
+
 	def ping(self):
  		self.last_seen = datetime.datetime.utcnow()
  		self.save()
- 		
+
 	def __init__(self, **kwargs):
  		super(User, self).__init__(**kwargs)
  		#self.password = password(self, password)
@@ -156,13 +189,13 @@ class User(UserMixin, db.Document):
  			if self.member_since is None:
  				self.member_since = datetime.datetime.utcnow
 
- 	
+
  	def can(self, permissions):
  		return self.role is not None and (self.role.permissions & permissions) == permissions
 
 	def is_administrator(self):
 		return self.can(Permission.ADMINISTER)
-		
+
 
 	def generate_reset_token(self, expiration=3600):
 		s = Serializer(current_app.config['SECRET_KEY'], expiration)
@@ -206,7 +239,7 @@ class User(UserMixin, db.Document):
 class AnonymousUser(AnonymousUserMixin):
  	def can(self, permissions):
  		return False
- 	
+
  	def is_administrator(self):
  		return False
 
@@ -270,18 +303,18 @@ class Lit(db.Document):
 
     	def __repr__(self):
  		return '<Lit %s, %s>' % (self.title, self.author)
-    
+
 class Permission:
 	ADDLIT = 0x01
 	ADMINISTER = 0x80
- 	
+
 # User Role
 class Role(db.Document):
  	name = db.StringField(unique=True)
  	default = db.BooleanField(default = False)
  	permissions = db.IntField()
  	user = db.ReferenceField('User')
- 	
+
  	def __repr__(self):
  		return '<Role %r>' % self.name
 
