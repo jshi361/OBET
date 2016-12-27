@@ -3,8 +3,7 @@
 #####################################
 
 # Import flask modules
-from flask import render_template, redirect, request, url_for, flash
-from flask.ext.login import login_user
+from flask import render_template, redirect, request, url_for, flash, current_app
 from . import auth #calls init file in auth
 # Import database models
 from ..models import User, Role, Lit
@@ -12,8 +11,7 @@ from ..models import User, Role, Lit
 from .forms import LoginForm, RegistrationForm, ReasonForm, ChangePasswordForm
 from .forms import PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm
 from ..email import send_email
-from flask import current_app
-from flask.ext.login import current_user, logout_user, login_required
+from flask.ext.login import current_user, login_user, logout_user, login_required
 from ..decorators import admin_required
 # Approve user, Admin approve user's application
 @auth.route('/approveUser/<email>', methods=['GET', 'POST'])
@@ -31,15 +29,15 @@ def approveUser(email):
 
     # If user is already confirmed, return to main page with message
     if user.confirmed:
-        flash('This user has already been approved.')
+        flash('User approved. This user has already confirmed.')
+        user.approve()
         return redirect(url_for('main.index'))
 
     # Call generate_confirmation_token on User obj
     token = user.generate_confirmation_token()
-
     # Send email to user
-    send_email(user.email, 'You\'ve been accepted to join OBET! Please confirm your account.', 'auth/email/confirm', user = user, token = token)
-    flash('The user has been emailed their confirmation information.')
+    send_email(user.email, 'You\'ve been accepted to join OBET! Please confirm your account.', 'email/confirm', user = user, token = token)
+    flash('User approved. The user has been emailed their confirmation information. Awaiting user confirmation.')
 
     # Approve user
     user.approve()
@@ -66,7 +64,7 @@ def rejectUser(email):
         reason = form.reason.data
         admin = current_user
         # Send email to user on their rejection
-        send_email(user.email, 'Your OBET User Status', 'auth/email/rejectNotice', user = user, reason = reason, admin = admin)
+        send_email(user.email, 'Your OBET User Status', 'email/rejectNotice', user = user, reason = reason, admin = admin)
         flash('The user has been emailed their rejection.')
         # Delete user
         user.delete()

@@ -2,9 +2,9 @@
 from flask.ext.wtf import Form
 from wtforms import StringField, TextAreaField, SubmitField, IntegerField, SelectField, SelectMultipleField
 from wtforms.validators import Required, Length, Optional, NumberRange, URL
+from wtforms.validators import Required, Length, Optional, NumberRange, URL
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 #from flask.ext.pagedown.fields import PageDownField
-# Import database models
-from ..models import User, Lit, Role
 
 # For for privileged users to add material into the database
 class AddLitForm(Form):
@@ -33,5 +33,13 @@ class DeleteLitForm(Form):
     refType = SelectField('Reference Type', choices=[('Book Section','Book Section'), ('Edited Book', 'Edited Book') , ('Journal Article', 'Journal Article'), ('Journal Issue', 'Journal Issue'),
         ('Magazine Article', 'Magazine Article'), ('Media', 'Media'), ('Newspaper Article', 'Newspaper Article'), ('Report', 'Report'), ('Thesis', 'Thesis'), ('Website', 'Website')], default = None)
     title = StringField('Title', validators = [Required(), Length(1,150)])
-    author = StringField('Author', validators = [Required(), Length(1,120)])
     submit = SubmitField('Delete Lit')
+
+class UploadLitFile(Form):
+    file = FileField(
+        'Select File (tsv format)', 
+        validators =[
+            FileRequired(),
+            FileAllowed(['tsv', 'txt'], 'tsv extensions only')
+        ])
+    submit = SubmitField('Upload File')

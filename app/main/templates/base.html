@@ -11,7 +11,7 @@
     <!-- Import bootstrap and custom styles -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
-
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <!-- Navigation bar -->
     <div style = "margin-bottom: 60px">
     <div id="menu" class="navbar navbar-default" role="navigation">
@@ -53,9 +53,10 @@
                     <!-- Add material if user can edit -->
                     {% if current_user.can(Permission.ADDLIT) or current_user.can(Permission.ADMINISTER) %}
                         <li><a href="{{ url_for('lit.addLit', name = current_user.name) }}">Add Material</a></li>
+                        <li><a href="{{ url_for('lit.deleteLit', name = current_user.name) }}">Delete Material</a></li>
                         <!-- Admin can delete users -->
                 	    {% if current_user.can(Permission.ADMINISTER) %}
-                	       <li><a href="{{ url_for('user.deleteUser', name = current_user.name) }}">Delete User</a></li>
+                	       <li><a href="{{ url_for('user.manageUsers', name = current_user.name) }}">Manage Users</a></li>
                 	    {% endif %}
                     {% endif %}
 

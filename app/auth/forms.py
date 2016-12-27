@@ -25,7 +25,7 @@ class LoginForm(Form):
 # Registration
 class RegistrationForm(Form):
     email = StringField('Email', validators=[Required(), Length(1, 64), Email()])
-    name = StringField('Name', validators=[Required(), Length(1, 64)])
+    name = StringField('Username', validators=[Required(), Length(1, 64)])
     password = PasswordField('Password', validators=[Required(), EqualTo('password2', message='Passwords must match.')])
     password2 = PasswordField('Confirm password', validators=[Required()])
     reason = TextAreaField('Reason for wanting to join', validators=[Required()])
@@ -35,6 +35,10 @@ class RegistrationForm(Form):
     def validate_email(self, field):
         if User.objects(email__iexact=field.data).first():
             raise ValidationError('Email already registered.')
+
+    def unique_username(self, field):
+        if User.objects(name__iexact=field.data).first():
+            raise ValidationError('Username taken.')
 
 # Rejected user reason form
 class ReasonForm(Form):

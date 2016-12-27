@@ -21,7 +21,7 @@ class EditProfileForm(Form):
 class EditProfileAdminForm(Form):
  	email = StringField('Email', validators=[Required(), Length(1, 64), Email()])
  	role = SelectField('Role')
- 	name = StringField('Real name', validators=[Length(1, 64)])
+ 	name = StringField('Username', validators=[Length(1, 64)])
  	location = StringField('Location', validators=[Length(0, 64)])
  	description = TextAreaField('About me', validators=[Length(0, 1000)])
  	confirmed = BooleanField('Confirmed')
@@ -38,8 +38,15 @@ class EditProfileAdminForm(Form):
  		if field.data != self.user.email and User.objects(email__iexact = field.data).first():
  			raise ValidationError('Email already registered.')
 
+class UpdateUserRole(Form):
+	email = EmailField("Email", validators=[Required()])
+	role = SelectField(label = 'Role', choices = [('User','User'),('Administrator', 'Administrator')], default=None)
+	submitRole = SubmitField('Update User Role')
+
 # Delete user
 # Not currently being used
 class DeleteUserForm(Form):
 	email = EmailField("Email", validators=[Required()])
-    	submit = SubmitField('Delete User')
+	submit = SubmitField('Delete User')
+
+

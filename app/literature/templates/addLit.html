@@ -11,8 +11,27 @@
 	</div>
 
 	<!-- Render add material form -->
-	<div class="col-md-5">
-		{{ wtf.quick_form(form) }}
-		<p></p><br><br>
+	<div class="container" style="padding:0; margin:0">
+		<div class="row" style="width:100%; float: left">
+			<div id="uploaded" class="col-lg-12">
+				{% if total >= 1 %}
+					{{ count }} of {{ total }} entries added. 
+				{% endif %}
+			</div>	
+			<div class="col-lg-5">
+				<div>	
+					<h2>Multiple Entries Upload</h2>
+					<form method="post" enctype="multipart/form-data">
+						{{ wtf.quick_form(formFile) }}
+					</form> 
+				</div>
+				<br><br><br>
+				<div>
+					<h2>Single Entry Submission</h2>
+					{{ wtf.quick_form(form) }}
+				</div>
+			</div>
+		
+		</div>
 	</div>
 {% endblock %}

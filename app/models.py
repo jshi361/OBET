@@ -19,38 +19,6 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 from . import db
 
-class Pagination(object):
-
-    def __init__(self, page, per_page, total_count):
-        self.page = page
-        self.per_page = per_page
-        self.total_count = total_count
-
-    @property
-    def pages(self):
-        return int(ceil(self.total_count / float(self.per_page)))
-
-    @property
-    def has_prev(self):
-        return self.page > 1
-
-    @property
-    def has_next(self):
-        return self.page < self.pages
-
-    def iter_pages(self, left_edge=2, left_current=2,
-                   right_current=5, right_edge=2):
-        last = 0
-        for num in xrange(1, self.pages + 1):
-            if num <= left_edge or \
-               (num > self.page - left_current - 1 and \
-                num < self.page + right_current) or \
-               num > self.pages - right_edge:
-                if last + 1 != num:
-                    yield None
-                yield num
-                last = num
-
 # Embedded document
 # Contains a record of a user's activity
 class UserEditRecord(db.EmbeddedDocument):
@@ -74,7 +42,7 @@ class User(UserMixin, db.Document):
     	confirmed = db.BooleanField(default = False)
     	activated = db.BooleanField(default = True)
     	approved = db.BooleanField(default = False)
-    	role = db.ReferenceField('Role')
+    	role = db.ReferenceField('Role', dbref= True, default = None)
     	member_since = db.DateTimeField(default = datetime.datetime.now)
         last_seen = db.DateTimeField(default = datetime.datetime.now)
         u_edit_record = db.SortedListField(db.EmbeddedDocumentField(UserEditRecord), ordering="date", reverse=True, default = [])
@@ -151,20 +119,40 @@ class User(UserMixin, db.Document):
  		self.save()
  		return True
 
-	def deactivate(self):
+ 	def approve(self):
+ 		if self.approved:
+ 			return True
+ 		self.approved = True
+ 		self.save()
+ 		return True
+
+ 	def deactivate(self):
  		if not self.activated:
  			return False
  		self.activated = False
  		self.save()
  		return False
 
-	def approve(self):
- 		if not self.approved:
- 			return True
- 		self.approved = True
- 		self.save()
- 		return True
+	def set_as_admin(self):
+		self.role = Role.objects(name__iexact = 'Administrator').first()
+		token = self.generate_confirmation_token()
+		self.confirm(token)
+ 		self.confirmed = True
+		self.confirmed = True
+		self.approved = True
+		self.activated = True
+		self.save()
+		print("user set as admin")
 
+	def set_as_ad(self):
+		self.role = Role.objects(name__iexact = 'Administrator').first()
+		self.save()
+		print("user set as admin")
+
+	def set_as_user(self):
+		self.role = Role.objects(name__iexact = 'User').first()
+		self.save()
+		print("user set as user")
 
 	def ping(self):
  		self.last_seen = datetime.datetime.utcnow()
@@ -174,7 +162,7 @@ class User(UserMixin, db.Document):
  		super(User, self).__init__(**kwargs)
  		#self.password = password(self, password)
  		if self.role is None:
- 			if self.email == current_app.config['OBET_ADMIN']:
+ 			if str(self.email) == current_app.config['OBET_ADMIN']:
  				self.role = Role.objects(name__iexact = 'Administrator').first()
  				self.confirmed = True
  				self.approved = True
@@ -189,13 +177,14 @@ class User(UserMixin, db.Document):
  			if self.member_since is None:
  				self.member_since = datetime.datetime.utcnow
 
-
  	def can(self, permissions):
  		return self.role is not None and (self.role.permissions & permissions) == permissions
 
 	def is_administrator(self):
 		return self.can(Permission.ADMINISTER)
 
+	def is_confirmed(self):
+		return self.confirmed
 
 	def generate_reset_token(self, expiration=3600):
 		s = Serializer(current_app.config['SECRET_KEY'], expiration)
@@ -212,7 +201,6 @@ class User(UserMixin, db.Document):
 		self.password = new_password
 		self.save()
 		return True
-
 
 	def generate_email_change_token(self, new_email, expiration=3600):
 		s = Serializer(current_app.config['SECRET_KEY'], expiration)
@@ -306,14 +294,14 @@ class Lit(db.Document):
 
 class Permission:
 	ADDLIT = 0x01
-	ADMINISTER = 0x80
+	ADMINISTER = 0xff
 
 # User Role
 class Role(db.Document):
  	name = db.StringField(unique=True)
  	default = db.BooleanField(default = False)
  	permissions = db.IntField()
- 	user = db.ReferenceField('User')
+ 	user = db.ReferenceField('User', dbref=True)
 
  	def __repr__(self):
  		return '<Role %r>' % self.name
@@ -342,3 +330,6 @@ def load_user(user_id):
     	if u is None:
         	return None
     	return u
+
+
+
