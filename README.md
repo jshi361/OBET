@@ -210,9 +210,9 @@ Open a browser and type "localhost:5000", and the site should come alive.
 * If you are still having trouble, please contact the creator of this site at **techiecheckie@gmail.com**.
 
 __________
-###Additional Tips
+#Additional Tips
 
-##to install pip on Ubuntu
+##To install pip on Ubuntu
 
 http://www.saltycrane.com/blog/2010/02/how-install-pip-ubuntu/
 sudo apt-get install python-pip python-dev 
