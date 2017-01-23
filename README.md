@@ -209,4 +209,25 @@ Open a browser and type "localhost:5000", and the site should come alive.
 
 * If you are still having trouble, please contact the creator of this site at **techiecheckie@gmail.com**.
 
+__________
+###Additional Tips
+
+##to install pip on Ubuntu
+
+http://www.saltycrane.com/blog/2010/02/how-install-pip-ubuntu/
+sudo apt-get install python-pip python-dev 
+sudo pip install --upgrade pip
+sudo pip install --upgrade virtualenv 
+
+##To install pip on Mac
+install home-brew
+brew install python
+
+proceed as usual from there
+
+(you need pip for virtualenv)
+_____________
+####Resources for OBET and Web Development in General
+http://www.looah.com/source/view/2284 - RESTful web apps explained in layman terms
+
 
