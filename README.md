@@ -215,13 +215,13 @@ __________
 ##To install pip on Ubuntu
 
 http://www.saltycrane.com/blog/2010/02/how-install-pip-ubuntu/
-sudo apt-get install python-pip python-dev 
-sudo pip install --upgrade pip
-sudo pip install --upgrade virtualenv 
+`sudo apt-get install python-pip python-dev`
+`sudo pip install --upgrade pip`
+`sudo pip install --upgrade virtualenv`
 
 ##To install pip on Mac
-install home-brew
-brew install python
+install home-brew then
+`brew install python`
 
 proceed as usual from there
 
