@@ -5,6 +5,7 @@ Procfile.txt
 app/client_secret.json
 .DS_store
 env/
+flask_session/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
