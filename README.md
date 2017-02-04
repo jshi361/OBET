@@ -56,6 +56,8 @@ After making an account on github, go [here] (https://github.com/techiecheckie/O
 To connect to github from your computer, you will need to [generate and add an SSH key] (https://help.github.com/articles/generating-ssh-keys/) to be allowed to do so.
 
 Back in the console, type:
+## Setting upstream as another branch is breaking commits for me
+## Must investigate
 * `git remote add upstream git@github.com:techiecheckie/OBET.git` -- this creates a connection to the repo
 
 Finally, to pull the code from the repo into your folder, type in the console:
