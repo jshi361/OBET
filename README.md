@@ -4,7 +4,7 @@
 
 **Creator Notes:** *This README will contain a detailed set of basic instructions on working this site, with the assumption that the person to take it over is a junior or senior CS student with little to no knowledge of full stack web application development.*
 
-OBET was built in Ubuntu (Linux/Unix), and it's suggested that the 
+OBET was built in Ubuntu (Linux/Unix), and it's suggested that the
 new student to upkeep it have experience with navigating the command line,
 though it is not necessary for the student to know too much more than
 what is taught in the first level C++ class.
@@ -23,7 +23,7 @@ Before beginning, the computer should be prepared with python and a python insta
 ##### Install Python
 * The version used for this site is 2.7.6
 * Ubuntu 14.04 comes with Python 3.4 installed
-	
+
 Open a terminal/console and type:
 * `sudo apt-get install build-essential checkinstall`
 * `sudo apt-get install libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev`
@@ -41,7 +41,7 @@ pip is a package installer for Python packages. It will make your life much easi
 
 In the console, type:
 * `sudo apt-get install pip` -- installs pip globally
-	
+
 ##### Install git if you don't have it, make a github account, grab the code from the repo.
 Git is a command line version control system that allows you to keep track of your code.
 Github allows you to store your code elsewhere so it's never lost no matter what.
@@ -56,8 +56,6 @@ After making an account on github, go [here] (https://github.com/techiecheckie/O
 To connect to github from your computer, you will need to [generate and add an SSH key] (https://help.github.com/articles/generating-ssh-keys/) to be allowed to do so.
 
 Back in the console, type:
-## Setting upstream as another branch is breaking commits for me
-## Must investigate
 * `git remote add upstream git@github.com:techiecheckie/OBET.git` -- this creates a connection to the repo
 
 Finally, to pull the code from the repo into your folder, type in the console:
@@ -78,7 +76,7 @@ If interested, read up on [git] (https://git-scm.com/download/linux) and [github
 
 ##### Install virtualenv.
 Virtualenv makes a virtual environment on your computer that will allow you to install certain python packages, but only within a specific folder. It essentially protects your main python installation.
-	
+
 In the console, type:
 * `pip install virtualenv` -- installs virtualenv
 * `cd OBET` -- navigate to the appropriate directory with your project, whatever its name.
@@ -143,13 +141,13 @@ Open a browser and type "localhost:5000", and the site should come alive.
 	* \__init__.py stores the startup for the Blueprint module.
 	* forms.py holds forms that need authorization of some kind.
 	* views.py is where views that need authorization are stored.
-	
+
 3. Main
 	* \__init__.py stores the startup for the Blueprint module as well as injecting permissions.
 	* errors.py holds the routing for errors, either from the site or the server.
 	* forms.py holds the forms associated with the main workings of the site.
 	* views.py holds the views for the main site processes.
-	
+
 4. Static and Templates
 	* favicon.ico is simply the name of the icon that goes next to the site name in the browser.
 	* ________.html is the HTML page that will show up when views.py calls them.
@@ -231,5 +229,3 @@ proceed as usual from there
 _____________
 ####Resources for OBET and Web Development in General
 http://www.looah.com/source/view/2284 - RESTful web apps explained in layman terms
-
-
