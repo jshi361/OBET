@@ -120,4 +120,5 @@ def downloadResults(request_form):
     # This is the key: Set the right header for the response
     # to be downloaded, instead of just printed on the browser
 	response.headers["Content-Disposition"] = "attachment; filename=obet_search.tsv"
+        response.headers["Content-Type"] = "text/tab-separated-values"
 	return response
