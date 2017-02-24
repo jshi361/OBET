@@ -13,7 +13,7 @@ from wtforms import widgets
 # Search form for regular search
 class SearchForm(Form):
 	search = StringField('Enter some terms to search on separated by a space:', validators = [Required()])
-	sort = SelectField('Sort by: ', choices = [('None',''), ('author', 'Author/Editor'), ('created_date', 'Date Created'), ('creator', 'Creator'), ('primaryField', 'Primary Field'), ('title', 'Title')])
+	sort = SelectField('Sort by: ', choices = [('None',''), ('author', 'Author/Editor'), ('yrPublished', 'Year'), ('title', 'Title'), ('sourceTitle', 'Source Title'), ('primaryField', 'Primary Field'), ('creator', 'Creator'), ('created_date', 'Date Created')])
 	submit = SubmitField('Search')
 
 # Not currently being used
