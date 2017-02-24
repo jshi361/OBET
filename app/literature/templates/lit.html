@@ -36,7 +36,7 @@
 		<p>{% if lit.primaryField %}<b>Primary Field: </b>{{ lit.primaryField }}{% endif %}</p>
 		<p>{% if lit.secondaryField %}<b>Secondary Field: </b>{{ lit.secondaryField }}{% endif %}</p>
 		<p>
-		<p>{% if lit.link %}<b>Link: </b>{{ lit.link }}{% endif %}</p>
+		<p>{% if lit.link %}<b>Link: </b><a href="{{ lit.link }}">{{ lit.link }}</a>{% endif %}</p>
 		<p>
 			<b>Creator: </b>{{ lit.creator }} <br> &nbsp;&nbsp;on {{ lit.created_date}}
 		</p>
