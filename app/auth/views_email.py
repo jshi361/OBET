@@ -5,7 +5,7 @@ from flask import render_template, redirect, request, url_for, flash
 from . import auth #calls init file in auth
 from .forms import ChangeEmailForm
 from ..email import send_email
-from flask.ext.login import current_user, login_required
+from flask_login import current_user, login_required
 
 # Change email request
 @auth.route('/change-email', methods=['GET', 'POST'])

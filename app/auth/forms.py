@@ -3,7 +3,7 @@
 #######################################################################
 
 # Import the Form class, fields, and validators from wtform
-from flask.ext.wtf import Form
+from flask_wtf import Form
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import Required, Email, Length, Regexp, EqualTo
 from wtforms import ValidationError
@@ -79,4 +79,3 @@ class ChangeEmailForm(Form):
     def validate_email(self, field):
         if User.objects(email__iexact = field.data).first():
             raise ValidationError('Email already registered.')
-

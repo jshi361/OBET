@@ -11,7 +11,7 @@ from ..models import User, Role, Lit
 from .forms import LoginForm, RegistrationForm, ReasonForm, ChangePasswordForm
 from .forms import PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm
 from ..email import send_email
-from flask.ext.login import current_user, login_user, logout_user, login_required
+from flask_login import current_user, login_user, logout_user, login_required
 from ..decorators import admin_required
 # Approve user, Admin approve user's application
 @auth.route('/approveUser/<email>', methods=['GET', 'POST'])
@@ -72,4 +72,3 @@ def rejectUser(email):
         return redirect(url_for('main.index'))
     # Else send "reject user" page
     return render_template('rejectUser.html', form = form)
-

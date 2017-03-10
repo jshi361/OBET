@@ -3,7 +3,7 @@
 #################################
 
 # Import the Form class, fields, and validators from wtform
-from flask.ext.wtf import Form
+from flask_wtf import Form
 from wtforms import StringField, TextAreaField, BooleanField, SubmitField, FieldList, IntegerField, SelectField, SelectMultipleField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import Required, Length, Optional, Email, Regexp, NumberRange, URL

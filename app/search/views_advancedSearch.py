@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, flash, request, make_response, session
 from flask_paginate import Pagination
-from flask.ext.session import Session
+from flask_session import Session
 from . import search
 from .. import db
 # Import database model
@@ -175,7 +175,7 @@ def advancedSearch():
 					session['lit'] = lit
 					session['total'] = total
 					session['preferences'] = preferences
-	
+
 				# Otherwise there were no results
 				else:
 					flash("Your query had no results.")
@@ -183,7 +183,7 @@ def advancedSearch():
 					session['info'] = sessioninfo
 
 	send_lit=[]
-	if request.method == 'GET': 
+	if request.method == 'GET':
 		print('inside GET request if statement ')
 		if 'info' in session:
 			sessioninfo= session.get('info')
@@ -220,11 +220,10 @@ def advancedSearch():
 		send_lit.extend(temp)
 
 	pagination = Pagination(
-		page=page, 
-		per_page=30, 
-		total=total, 
+		page=page,
+		per_page=30,
+		total=total,
 		record_name='references'
-	)	
+	)
 
 	return render_template('advancedSearch.html', lit = send_lit, pagination = pagination, total = total, sessioninfo = sessioninfo, preferences = preferences)
-

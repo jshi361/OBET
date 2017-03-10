@@ -7,7 +7,7 @@ from .. import db
 # Import database model
 from ..models import Lit, UserEditRecord
 from mongoengine.queryset.visitor import Q
-from flask.ext.login import login_required, current_user
+from flask_login import login_required, current_user
 
 # Not currently in use ##############################################################
 
@@ -40,17 +40,17 @@ def deleteLit():
 		end=page*30
 		lit_showed = lit_stored[start:end]
 		pagination = Pagination(
-			page=page, 
+			page=page,
 			per_page=30,
 			total=total,
 			record_name='resources'
 		)
-	else: 
+	else:
 		total = 0
 		lit_showed = None
 		page = request.args.get('page', type=int, default=1)
 		pagination = Pagination(
-			page=page, 
+			page=page,
 			per_page=30,
 			total=total,
 			record_name='resources'
@@ -74,4 +74,3 @@ def deleteLit():
  		return redirect(url_for('lit.deleteLit'))
  	return render_template('deleteLit.html', form = form, lit_showed = lit_showed, pagination = pagination,
     	total=total, preferences = preferences)
-

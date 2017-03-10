@@ -7,7 +7,7 @@ from .. import db
 # Import database model
 from ..models import User, Lit, LitEditRecord, UserEditRecord
 from mongoengine.queryset.visitor import Q
-from flask.ext.login import login_required, current_user
+from flask_login import login_required, current_user
 
 ##############
 # Update Lit #
