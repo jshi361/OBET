@@ -5,7 +5,7 @@ from flask import render_template, redirect, request, url_for, flash
 from . import auth #calls init file in auth
 from ..models import User # Import database models
 from .forms import LoginForm  #Import authentication forms defined in forms.py
-from flask.ext.login import login_user, current_user, logout_user, login_required
+from flask_login import login_user, current_user, logout_user, login_required
 
 # login url
 # ie. If user accesses "obet.herokuap p.com/login" this method is called
@@ -36,4 +36,3 @@ def logout():
     flash('You have been logged out.')
     # Return main page
     return redirect(url_for('main.index'))
-

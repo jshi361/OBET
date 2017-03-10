@@ -7,7 +7,7 @@ from ..models import User
 # Import authentication forms defined in forms.py
 from .forms import ChangePasswordForm, PasswordResetRequestForm, PasswordResetForm
 from ..email import send_email
-from flask.ext.login import current_user, login_required
+from flask_login import current_user, login_required
 
 # Change password
 @auth.route('/change-password', methods=['GET', 'POST'])

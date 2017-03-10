@@ -7,8 +7,8 @@ from .. import mail
 from ..email import send_email, send_async_email
 from ..models import User
 from .forms import RegistrationForm
-from flask.ext.mail import Message
-from flask.ext.login import current_user, login_required, login_user
+from flask_mail import Message
+from flask_login import current_user, login_required, login_user
 
 
 # Registration for users
@@ -19,7 +19,7 @@ def register():
     # If the form is submitted and valid
     if form.validate_on_submit():
         # Create a new user
-        user = User() #under models.py 
+        user = User() #under models.py
         # Set the attributes of the new user to form inputs
         user.email = str(form.email.data)
         user.name = form.name.data
@@ -31,7 +31,7 @@ def register():
         email = str(form.email.data)
         reason = form.reason.data
         # If the email matches the current admin's email then automatically approve
-        if str(form.email.data).upper() == current_app.config['OBET_ADMIN'].upper(): 
+        if str(form.email.data).upper() == current_app.config['OBET_ADMIN'].upper():
             flash('Welcome to OBET, new Admin! Please log in to continue.')
             user.set_as_admin()
             # Return login page

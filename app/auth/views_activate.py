@@ -3,7 +3,7 @@
 ##################################
 from flask import render_template, redirect, request, url_for, flash
 from . import auth #calls init file in auth
-from flask.ext.login import current_user, login_required
+from flask_login import current_user, login_required
 
 # Activate user
 @auth.route('/activate')

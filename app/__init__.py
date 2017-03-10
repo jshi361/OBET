@@ -1,11 +1,11 @@
 from flask import Flask, render_template, session
-from flask.ext.session import Session
+from flask_session import Session
 from flask_bootstrap import Bootstrap
-from flask.ext.mail import Mail
-from flask.ext.moment import Moment
-from flask.ext.mongoengine import MongoEngine
+from flask_mail import Mail
+from flask_moment import Moment
+from flask_mongoengine import MongoEngine
 from config import config
-from flask.ext.login import LoginManager
+from flask_login import LoginManager
 from dotenv import parse_dotenv, load_dotenv
 
 login_manager = LoginManager()
@@ -34,7 +34,7 @@ def create_app(config_name):
         'host': app.config['MONGO_URI']
     }
 
-    #MAIL 
+    #MAIL
     app.config.update(
         DEBUG=True,
         #EMAIL SETTINGS
@@ -55,7 +55,7 @@ def create_app(config_name):
     moment.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
-    
+
     Session(app)
 
 # additional _init_.py file in each of these modules

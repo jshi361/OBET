@@ -8,7 +8,7 @@ from .. import db
 # Import database model
 from ..models import Lit, LitEditRecord, UserEditRecord
 from mongoengine.queryset.visitor import Q
-from flask.ext.login import login_required, current_user
+from flask_login import login_required, current_user
 ###########
 # Add Lit #
 ###########
@@ -42,7 +42,7 @@ def addLit():
 				entry = line.split('\t')
 				print(len(entry))
 				lit = Lit.objects(refType__iexact = entry[0], title__iexact = entry[2]).first()
-				if lit is not None: 
+				if lit is not None:
 					flash("This entry is already in the database.")
 				else:
 					count=count+1
@@ -62,7 +62,7 @@ def addLit():
 					lit.update(set__notes = entry[13])
 					lit.update(set__secondaryField = entry[15])
 					lit.update(set__DOI = entry[17])
-					
+
 					# If the link field is not empty, save the link too
 					# If statement is done because update fails when attempting to save an empty string
 					if form.link.data is not None:

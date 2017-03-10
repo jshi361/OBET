@@ -8,12 +8,12 @@ from .. import db
 # Import database model
 from ..models import Lit, LitEditRecord
 from mongoengine.queryset.visitor import Q
-from flask.ext.login import login_required, current_user
+from flask_login import login_required, current_user
 import json
 
 # Default user preferences for search result fields display
 default_pref = {"author": True, "yrPublished": True, "title":True, "sourceTitle": True, "primaryField": True, "creator": True, "dateCreatedOn": True, "editor": False, "refType": False, "lastModified": False, "lastModifiedBy": False}
-  
+
 
 @browse.route('/browse', methods = ['GET'])
 def browse():
@@ -22,7 +22,7 @@ def browse():
 	q = request.args.get('q')
 	if q:
 		search = True
-	
+
 	total = Lit.objects.count()
 	page = request.args.get('page', type=int, default=1)
 
@@ -30,10 +30,10 @@ def browse():
 	end=page*30
 	lit = Lit.objects[start:end].order_by('-create_date')
 	pagination = Pagination(
-		page=page, 
-		per_page=30, 
-		total=total, 
-		search=search, 
+		page=page,
+		per_page=30,
+		total=total,
+		search=search,
 		record_name='references'
 	)
 
