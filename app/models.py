@@ -5,14 +5,14 @@
 # Import mongoengine and flask modules
 from math import ceil
 from flask import current_app, request, url_for
-from flask.ext.mongoengine.wtf import model_form
-from flask.ext.wtf import Form
+from flask_mongoengine.wtf import model_form
+from flask_wtf import Form
 # Import wtforms
 from wtforms import StringField, SubmitField
 from wtforms.validators import Required
 # Werkzeug
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask.ext.login import UserMixin, AnonymousUserMixin
+from flask_login import UserMixin, AnonymousUserMixin
 
 import datetime
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -330,6 +330,3 @@ def load_user(user_id):
     	if u is None:
         	return None
     	return u
-
-
-

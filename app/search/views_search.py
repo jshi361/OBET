@@ -1,5 +1,5 @@
 from flask import render_template, request, flash, session
-from flask.ext.session import Session
+from flask_session import Session
 from flask_paginate import Pagination
 from . import search #calling on init py
 from .forms import SearchForm
@@ -30,14 +30,14 @@ def search():
 			session['preferences'] = preferences
 			page = request.args.get('page', type=int, default=1)
 			print('IN BASIC SEARCH with total entries ', session.get('total'))
-			
+
 		# If the request is from the main page
 		elif request.form['submitBtn']=='main':
 			form, lit, total, preferences =fuzzySearch(request)
 			session['query'] = form.search.data
 			session['lit'] = lit
 			session['total'] = total
-			session['preferences'] = preferences	
+			session['preferences'] = preferences
 			page = request.args.get('page', type=int, default=1)
 			print('IN FUZZY with total entries', session.get('total'))
 
@@ -50,12 +50,12 @@ def search():
 			return refineList(request, "reg")
 			session['query'] = form.search.data
 			session['lit'] = lit
-			session['preferences'] = preferences	
+			session['preferences'] = preferences
 			print('REFINING LIST')
 
 	send_lit=[]
 
-	if request.method == 'GET': 
+	if request.method == 'GET':
 		print('inside GET request if statement ')
 		if 'query' in session:
 			form.search.data = session.get('query')
@@ -66,7 +66,7 @@ def search():
 		if 'preferences' in session:
 			preferences = session.get('preferences')
 		page = request.args.get('page', type=int, default=1)
-	else: 
+	else:
 		page = 1
 
 	#pagination
@@ -96,26 +96,18 @@ def search():
 		send_lit.extend(temp)
 
 	pagination = Pagination(
-		page=page, 
-		per_page=30, 
-		total=total, 
+		page=page,
+		per_page=30,
+		total=total,
 		record_name='references'
 	)
-	
+
 	if total <= 0:
 		flash("Your search returned nothing. Try other search terms.")
 		return render_template('search.html', form = form, lit = lit, pagination = pagination, total = total, preferences = preferences )
 
-		
+
 	print('page number is', page, 'total is', total, 'size of lit', len(lit), 'size of send_lit', len(send_lit))
 	# Otherwise return regular search page
 	print('this is the regular search page we keep going into')
 	return render_template('search.html', form = form, lit = send_lit, pagination = pagination, total = total, preferences = preferences )
-
-
-
-
-
-
-
-

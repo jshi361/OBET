@@ -3,7 +3,7 @@
 #################################
 
 # Import the Form class, fields, and validators from wtform
-from flask.ext.wtf import Form
+from flask_wtf import Form
 from wtforms import StringField, SubmitField, SelectField
 from wtforms.validators import Required
 from wtforms import ValidationError

@@ -1,5 +1,5 @@
 # Import the Form class, fields, and validators from wtform
-from flask.ext.wtf import Form
+from flask_wtf import Form
 from wtforms import StringField, TextAreaField, SubmitField, IntegerField, SelectField, SelectMultipleField
 from wtforms.validators import Required, Length, Optional, NumberRange, URL
 from wtforms.validators import Required, Length, Optional, NumberRange, URL
@@ -37,7 +37,7 @@ class DeleteLitForm(Form):
 
 class UploadLitFile(Form):
     file = FileField(
-        'Select File (tsv format)', 
+        'Select File (tsv format)',
         validators =[
             FileRequired(),
             FileAllowed(['tsv', 'txt'], 'tsv extensions only')

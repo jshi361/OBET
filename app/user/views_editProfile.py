@@ -3,7 +3,7 @@ from . import user
 from .. import db
 from .forms import EditProfileForm
 from mongoengine.queryset.visitor import Q
-from flask.ext.login import login_required, current_user
+from flask_login import login_required, current_user
 ################
 # Edit Profile #
 ################

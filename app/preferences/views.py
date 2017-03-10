@@ -8,7 +8,7 @@ from . import pref
 from .forms import Preferences
 from .. import db
 from mongoengine.queryset.visitor import Q
-from flask.ext.login import current_user
+from flask_login import current_user
 import json
 
 # Default user preferences for search result fields display

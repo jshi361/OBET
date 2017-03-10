@@ -2,7 +2,7 @@
 import os
 from app import create_app, db
 from app.models import User, Role, Lit
-from flask.ext.script import Manager, Shell
+from flask_script import Manager, Shell
 
 app = create_app(os.getenv('OBET_CONFIG') or 'default')
 manager = Manager(app)
