@@ -3,7 +3,6 @@
 ##########
 from flask_paginate import Pagination
 from flask import render_template, redirect, url_for, flash, request, make_response
-from flask.ext.session import Session
 from . import browse
 from .forms import BrowseForm
 from .. import db
@@ -15,17 +14,11 @@ import json
 
 # Default user preferences for search result fields display
 default_pref = {"author": True, "yrPublished": True, "title":True, "sourceTitle": True, "primaryField": True, "creator": True, "dateCreatedOn": True, "editor": False, "refType": False, "lastModified": False, "lastModifiedBy": False}
-<<<<<<< HEAD
-=======
-
->>>>>>> upstream/master
-
 
 @browse.route('/browse', methods = ['GET', 'POST'])
 
 def browse():
 
-<<<<<<< HEAD
         form = BrowseForm()
 
     	search = False
@@ -76,7 +69,7 @@ def browse():
         	preferences = preferences,
             form = form
         	)
-=======
+
 	search = False
 	q = request.args.get('q')
 	if q:
@@ -111,4 +104,3 @@ def browse():
     	total=total,
     	preferences = preferences,
     	)
->>>>>>> upstream/master
