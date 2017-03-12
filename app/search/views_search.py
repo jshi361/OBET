@@ -56,15 +56,23 @@ def search():
 	send_lit=[]
 
 	if request.method == 'GET':
-		print('inside GET request if statement ')
+		print('inside GET request if statement')
 		if 'query' in session:
 			form.search.data = session.get('query')
+		else:
+			form.search.data = ''
 		if 'lit' in session:
 			lit = session.get('lit')
+		else:
+			lit = ''
 		if 'total' in session:
 			total = session.get('total')
+		else:
+			total = -1
 		if 'preferences' in session:
 			preferences = session.get('preferences')
+		else:
+			preferences = default_pref
 		page = request.args.get('page', type=int, default=1)
 	else:
 		page = 1
@@ -102,8 +110,10 @@ def search():
 		record_name='references'
 	)
 
-	if total <= 0:
+	if total == 0:
 		flash("Your search returned nothing. Try other search terms.")
+		return render_template('search.html', form = form, lit = lit, pagination = pagination, total = total, preferences = preferences )
+	if total == -1:
 		return render_template('search.html', form = form, lit = lit, pagination = pagination, total = total, preferences = preferences )
 
 
