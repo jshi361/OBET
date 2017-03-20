@@ -13,7 +13,7 @@ import json
 
 # Default user preferences for search result fields display
 default_pref = {"author": True, "yrPublished": True, "title":True, "sourceTitle": True, "primaryField": True, "creator": True, "dateCreatedOn": True, "editor": False, "refType": False, "lastModified": False, "lastModifiedBy": False}
-  
+
 
 def fuzzySearch(request):
 
@@ -38,7 +38,7 @@ def fuzzySearch(request):
 
   	# If there were no results, return page
   	if len(lit) == 0:
-		return (form, lit, 0, default_pref)
+		return (form, None, 0, default_pref)
 
 	# Otherwise return the page with the search results
 	if len(lit) > 0:
