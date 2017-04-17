@@ -51,7 +51,8 @@
                     <!-- Change preferences -->
                     <li><a href="{{ url_for('pref.preferences') }}">Preferences</a></li>
                     <!-- Add material if user can edit -->
-                    {% if current_user.can(Permission.ADDLIT) or current_user.can(Permission.ADMINISTER) %}
+                    <!-- changed current_user.can(Permission.ADDLIT) to current_user.approved=='True'; before changing this users with or without approval could add and delete lit -->
+                    {% if current_user.approved==True or current_user.can(Permission.ADMINISTER) %}
                         <li><a href="{{ url_for('lit.addLit', name = current_user.name) }}">Add Material</a></li>
                         <li><a href="{{ url_for('lit.deleteLit', name = current_user.name) }}">Delete Material</a></li>
                         <!-- Admin can delete users -->
