@@ -31,6 +31,8 @@ def approveUser(email):
     if user.confirmed:
         flash('User approved. This user has already confirmed.')
         user.approve()
+        # if already confirmed, send email to user letting user know they've been approved
+        send_email(user.email, 'You\'ve been accepted to join OBET! Sign in to get started.', 'email/confirm2', user=user )
         return redirect(url_for('main.index'))
 
     # Call generate_confirmation_token on User obj
