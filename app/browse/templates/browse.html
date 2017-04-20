@@ -11,9 +11,18 @@
       <h2>Browse</h2>
   </div>
 
-  <div class="col-xs-12 col-sm-9 col-md-8">
-    {{ wtf.quick_form(form) }} <br><br><br>
-  </div class>
+  <div class="form-group">
+    <form method="post" role="form" onsubmit="$('#submit-load').show();">
+      {{ form.csrf_token }}
+      {{ form.sort.label }}
+      {{ form.sort(class_="form-control") }}
+      <button id="submit" class="btn btn-success btn-block" name="submit" type="submit">Sort</button><br><br>
+    </form>
+  </div>
+
+  <div id="submit-load" class="text-center" style="display:none">
+    <img src="static/browse-loader.gif" alt="Loading..." />
+  </div>
 
   <div class="container">
     {% if total >= 1 %}
@@ -24,9 +33,9 @@
 
       <!-- the actual table of references -->
           {% if lit %}
-            <div class="container">
+            <div class="container table-responsive">
               <!-- Results table -->
-              <table class="table">
+              <table class="table table-bordered">
                 <!-- Table headers -->
                 <thead>
                   <!-- Fields displayed based on user preferences -->
