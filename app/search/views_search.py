@@ -46,7 +46,8 @@ def search():
 			print('EXPORTING...')
 
 	 	# If the request is to refine the list of search results
-		elif request.form['submitBtn']=='RefineList':
+		elif request.form['submitBtn']=='Refine List':
+			page = request.args.get('page', type=int, default=1)
 			return refineList(request, "reg")
 			session['query'] = form.search.data
 			session['lit'] = lit
