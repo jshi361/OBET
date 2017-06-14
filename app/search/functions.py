@@ -101,7 +101,7 @@ def downloadResults(request_form):
 	lit = json.loads(lit)
 
 	# Remove unnecessary fields
-	header = sorted(["abstract","author","editor","keywords","link","notes","number","pages","placePublished","primaryField","publisher","refType","secondaryField","sourceTitle","title","volume","yrPublished","DOI"])
+	header = ["title", "refType", "author", "yrPublished", "sourceTitle", "editor", "placePublished", "publisher", "volume", "number", "pages", "keywords", "abstract", "notes", "primaryField", "secondaryField", "link", "DOI"]
 	dict_filter(lit, "_id", "l_edit_record", "last_edit", "created_date", "creator")
 	header = encode(header)
 

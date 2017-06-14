@@ -8,7 +8,7 @@ from flask_wtf.file import FileField, FileAllowed, FileRequired
 
 # For for privileged users to add material into the database
 class AddLitForm(Form):
-    refType = SelectField('Reference Type', validators = [Required()], choices=[('Book Section','Book Section'), ('Edited Book', 'Edited Book') , ('Journal Article', 'Journal Article'), ('Journal Issue', 'Journal Issue'),('Magazine Article', 'Magazine Article'), ('Media', 'Media'), ('Newspaper Article', 'Newspaper Article'), ('Report', 'Report'), ('Thesis', 'Thesis'), ('Website', 'Website')])
+    refType = SelectField('Reference Type', validators = [Required()], choices=[('Book','Book'), ('Book Section','Book Section'), ('Edited Book', 'Edited Book') , ('Journal Article', 'Journal Article'), ('Journal Issue', 'Journal Issue'),('Magazine Article', 'Magazine Article'), ('Media', 'Media'), ('Newspaper Article', 'Newspaper Article'), ('Report', 'Report'), ('Thesis', 'Thesis'), ('Website', 'Website')])
     author = StringField('Author', validators = [Length(0,120)])
     title = StringField('Title', validators = [Required(), Length(1,150)])
     yrPublished = IntegerField('Year Published', validators = [NumberRange(min=1800), Optional()])  # MUST ADD max_value!!! Limit it to THIS year!!
@@ -30,7 +30,7 @@ class AddLitForm(Form):
 # Delete literature
 # Not currently being used
 class DeleteLitForm(Form):
-    refType = SelectField('Reference Type', choices=[('Book Section','Book Section'), ('Edited Book', 'Edited Book') , ('Journal Article', 'Journal Article'), ('Journal Issue', 'Journal Issue'),
+    refType = SelectField('Reference Type', choices=[('Book','Book'),('Book Section','Book Section'), ('Edited Book', 'Edited Book') , ('Journal Article', 'Journal Article'), ('Journal Issue', 'Journal Issue'),
         ('Magazine Article', 'Magazine Article'), ('Media', 'Media'), ('Newspaper Article', 'Newspaper Article'), ('Report', 'Report'), ('Thesis', 'Thesis'), ('Website', 'Website')], default = None)
     title = StringField('Title', validators = [Required(), Length(1,150)])
     submit = SubmitField('Delete Lit')

@@ -232,7 +232,7 @@ class AnonymousUser(AnonymousUserMixin):
  		return False
 
 # Variables for Literature/Lit objects
-REFTYPES = ('Book Section', 'Edited Book', 'Journal Article', 'Journal Issue', 'Magazine Article', 'Media',
+REFTYPES = ('Book', 'Book Section', 'Edited Book', 'Journal Article', 'Journal Issue', 'Magazine Article', 'Media',
     'Newspaper Article', 'Report', 'Thesis', 'Website' )
 
 FIELDS = (('Philosophy/Ethics/Theology','Philosophy/Ethics/Theology'),

@@ -48,7 +48,7 @@
 		<!-- If user is admin, they can delete the item -->
 		{% if current_user.is_administrator() %}
 		<p>
-			<a href="{{ url_for('lit.deleteLiterature', lit_id = lit.id) }}">
+			<a href="{{ url_for('lit.deleteLit', lit_id = lit.id) }}">
 				<button type="button">Delete</button></a>
 		</p>
 		{% endif %}
