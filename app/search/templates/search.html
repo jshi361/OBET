@@ -140,9 +140,9 @@
         <form id="searchoptions" action="{{url_for('search.search')}}" method="post" enctype="multipart/form-data" >
           <ul class="nav navbar-nav">
             <!-- Refine list -->
-            <li><input class="btn search-nav" type="submit" onclick="refined()" name="submitBtn" value="RefineList"/></li>
+            <li><input class="btn search-nav" type="submit" onclick="refined()" name="submitBtn" value="Refine List"/></li>
             <!-- Print -->
-            <li><button class="btn search-nav" type="button" onclick="printDiv('printableArea');"> Print </button></li>
+            <li><button class="btn search-nav" type="button" onclick="printDiv('printableArea');"> Print This Page </button></li>
             <!-- Export -->
             <li><input id="submitBtn" class="btn search-nav" type="submit" onclick="refined(); return confirm('Export checked references as a TSV file?');" name="submitBtn" value="Export"/></li>
           </ul>
@@ -162,7 +162,7 @@
     <p>
       <br> <a href="{{ url_for('search.advancedSearch') }}"> Advanced Search </a>
     </p>
-    
+
     <!-- If there are search results, display based on user preferences -->
     {% if lit %}
       <br><br><br>
@@ -170,9 +170,9 @@
         <h2>Results</h2>
       {% if total >= 1 %}
         {{ pagination.info }}
-      {% endif %}     
+      {% endif %}
         {{ pagination.links }}
-        
+
         <p>
           <b> {{ lit|length }} </b> references that match your search query:
         </p>
@@ -273,5 +273,3 @@
 </form> <button type="submit" form="sort" value="Sort"> Sort </button> -->
   </div>
 {% endblock %}
-
-
