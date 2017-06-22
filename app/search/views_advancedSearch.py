@@ -141,7 +141,7 @@ def advancedSearch():
 			cond = 'condition1'
 			first = True
 			# get number of conditions
-			count = int(request.form['count'])
+			count = 1
 			# string to contain the mongo query
 			query = 'lit = Lit.objects('
 			# go through all the conditions and add the information to
@@ -193,6 +193,7 @@ def advancedSearch():
 			total = session.get('total')
 		if 'preferences' in session:
 			preferences = session.get('preferences')
+		preferences = default_pref	
 		page = request.args.get('page', type=int, default=1)
 
 	#pagination
