@@ -193,6 +193,7 @@ def advancedSearch():
 			total = session.get('total')
 		if 'preferences' in session:
 			preferences = session.get('preferences')
+		preferences = default_pref
 		page = request.args.get('page', type=int, default=1)
 
 	#pagination

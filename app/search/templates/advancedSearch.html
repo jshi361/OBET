@@ -86,7 +86,7 @@
         <h2>Results</h2>
       {% if total >= 1 %}
         {{ pagination.info }}
-      {% endif %}     
+      {% endif %}
         {{ pagination.links }}
       </div>
 
@@ -290,7 +290,7 @@
       '  <input id="inputtext1" class="form-control" name="inputtext1"/>'+
       '  <button id="removebutton1" type="button" class="btn btn-default form-inline" onclick="deleteCondition()">-</button>'+
       '</div>';
-      
+
     // Input names (number incremented for each additional condition in query)
     var categoryId = 'category1';
     var containsId = 'contains1';
@@ -380,8 +380,12 @@
     // Rebuild the query in the page
     function rebuildQuery(){
       sessioninfo = JSON.parse(sessioninfo);
-      counter = parseInt(sessioninfo.count)+1;
-
+      if( isNaN(sessioninfo.count) ){
+        counter = counter
+      }
+      else{
+        counter = parseInt(sessioninfo.count)+1;
+      }
       // Recreate the same number of fields
       for(var i = 2; i<=sessioninfo.count; i++){
         var regex = /1/gm;
