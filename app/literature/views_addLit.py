@@ -17,36 +17,32 @@ from flask_login import login_required, current_user
 @lit.route('/addLit', methods=['GET', 'POST'])
 @login_required
 def addLit():
- 	total = 0
- 	count = 0
 	# Add form for file upload
 	formFile = UploadLitFile()
 	# Create new add lit form
- 	form = AddLitForm()
-
- 	if formFile.submit.data and formFile.validate_on_submit():
+	form = AddLitForm()
+	total = 0
+	count = 0
+	if formFile.submit.data and formFile.validate_on_submit():
 		if formFile.file.data.filename == '':
 				flash('No Selected File')
 		else:
 			filename = secure_filename(formFile.file.data.filename)
 			file = formFile.file.data
-			flash('File uploaded. Processed')
-			read = file.readlines()
-			lines = read[0].split('\r')
-			total = len(lines)-1
-			print('total', total)
-			count = 0
-			for line in lines[1:]:
-				if count == total:
-					break
+			lines = file.readlines()
+			total = len(lines)
+			current_item = 0
+			for line in lines:
+				current_item = current_item+1
 				entry = line.split('\t')
-				print(len(entry))
+				type(entry)
 				lit = Lit.objects(refType__iexact = entry[0], title__iexact = entry[2]).first()
 				if lit is not None:
-					flash("This entry is already in the database.")
+					flash("Entry " + str(current_item) + " is already in the database.")
+				elif len(entry) < 18:
+					flash("Entry number " + str(current_item) + " is incomplete.")
 				else:
 					count=count+1
-					print(str(entry[12]))
 					for x in range(0,17):
 						entry[x].strip()
 					lit = Lit(refType = entry[0], author = entry[1], title = entry[2], pages = entry[10], primaryField = entry[14], creator = current_user.name)
@@ -84,18 +80,20 @@ def addLit():
 					userHist = UserEditRecord(litEdited = str(lit.id), operation = "add", litEditedTitle = lit.title)
 					current_user.update(push__u_edit_record = userHist)
 					current_user.reload()
-			flash("Successfully added!")
+					lit = None
+					#flash("Successfully added!")
+			flash("Upload Successful.")
 			return redirect(url_for('lit.addLit'))
 	else:
 		filename = None
 
- 	# On form submission
- 	if form.submit.data and form.validate_on_submit():
+	# On form submission
+	if form.submit.data and form.validate_on_submit():
 
- 		# If the literature is already in the database, then do not add the material, return
+		# If the literature is already in the database, then do not add the material, return
 		lit = Lit.objects(title__iexact = form.title.data, author__iexact = form.author.data, pages__iexact = form.pages.data).first()
 		if lit is not None:
- 			flash("This is already in the DB. This is the page")
+			flash("This is already in the DB. This is the page")
 			return render_template('lit.html', lit = lit)
 
 		# Create a new lit object, save to db first, then update fields
@@ -137,5 +135,5 @@ def addLit():
 		current_user.reload()
 
 		flash("Successfully added!")
- 		return redirect(url_for('lit.lit', lit_id = lit.id))
- 	return render_template('addLit.html', form = form, formFile = formFile, filename = filename, total = total, count = count)
+		return redirect(url_for('lit.lit', lit_id = lit.id))
+	return render_template('addLit.html', form = form, formFile = formFile, filename = filename, total = total, count = count)

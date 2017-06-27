@@ -63,7 +63,7 @@ def deleteLit():
 		lit = Lit.objects(title__exact = title, refType__exact = refType).first()
 		if lit is None:
 			flash ("No literature like this in the database")
-		if current_user.role.name == 'User' and lit.creator != current_user.name:
+		elif current_user.role.name == 'User' and lit.creator != current_user.name:
 			flash ('You did not upload this literature. Please delete a literature you uploaded.')
 		else:
 			userHist = UserEditRecord(litEdited = str(lit.id), litEditedTitle = lit.title, operation = "delete")
