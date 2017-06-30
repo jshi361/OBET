@@ -18,21 +18,27 @@
 		Currently the database contains <b>{{ litcount }}</b> documents
 	</h4>
 
-	<!-- Search form -->
 	<div class="row">
-	    <div class="input-group input-group-lg">
-	      <input id="query" type="text" class="form-control" placeholder="e.g., Holmes Rolston">
-	      <!-- Search button -->
-	      <span class="input-group-btn">
-	        <button class="btn btn-default search-btn"
-	        				type="button"
-	        				id="searchbtn"
-	        				onclick="submitform()"
-	        >
-	        	Search
-	        </button>
-	      </span>
-	    </div>
+			<div class="input-group input-group-lg">
+				<input id="query" type="text" class="form-control" placeholder="e.g., Rolston; policy AND China; &quot;environmental ethics&quot;">
+				<!-- Search button -->
+				<span class="input-group-btn">
+					<button class="btn btn-default search-btn"
+									type="button"
+									id="searchbtn"
+									onclick="submitform()"
+					>
+						Search
+					</button>
+				</span>
+			</div>
+	</div>
+
+	<div class="row text-center">
+			<p><br><i>An OR is assumed between search terms unless you enter AND. For an exact
+			phrase, use quotation marks. To exclude a term, place a minus sign before
+			it. Authors are listed in the database as</i> Last name, First name (or initial).
+			<br><i>For more capabilities, see</i> Advanced Search.</p>
 	</div>
 
 	<!-- Link to advanced search -->
