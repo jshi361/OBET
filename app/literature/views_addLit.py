@@ -112,6 +112,7 @@ def addLit():
 		lit.update(set__abstract = form.abstract.data)
 		lit.update(set__notes = form.notes.data)
 		lit.update(set__secondaryField = form.secondaryField.data)
+		lit.update(set__DOI = form.DOI.data)
 
 		# Add user's edit in edit history
 		editHist = LitEditRecord(lastUserEdited = current_user.name)

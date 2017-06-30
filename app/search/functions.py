@@ -58,7 +58,7 @@ def appendCreatorName(lit):
 # Return the template for regular search
 
 ########################
-# Export to CSV
+# Export to TSV
 ########################
 
 # Utility function to delete specified keys
@@ -101,7 +101,7 @@ def downloadResults(request_form):
 	lit = json.loads(lit)
 
 	# Remove unnecessary fields
-	header = ["title", "refType", "author", "yrPublished", "sourceTitle", "editor", "placePublished", "publisher", "volume", "number", "pages", "keywords", "abstract", "notes", "primaryField", "secondaryField", "link", "DOI"]
+	header = ["refType","title","author", "yrPublished", "sourceTitle", "editor", "placePublished", "publisher", "volume", "number", "pages", "keywords", "abstract", "notes", "primaryField", "secondaryField", "link", "DOI"]
 	dict_filter(lit, "_id", "l_edit_record", "last_edit", "created_date", "creator")
 	header = encode(header)
 
