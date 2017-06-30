@@ -25,6 +25,7 @@ class AddLitForm(Form):
     primaryField = SelectField('Primary Field', validators = [Required()], choices = [('Philosophy/Ethics/Theology','Philosophy/Ethics/Theology'), ('Anthropology/Psychology/Sociology','Anthropology/Psychology/Sociology'), ('History/Politics/Law','History/Politics/Law'), ('Agriculture/Energy/Industry','Agriculture/Energy/Industry'), ('Animal Science/Welfare','Animal Science/Welfare'), ('Ecology/Conservation','Ecology/Conservation'), ('Nature Writing/Art/Literary Criticism','Nature Writing/Art/Literary Criticism'), ('Education/Living','Education/Living')])
     secondaryField = SelectField('Secondary Field', choices = [('','None'), ('Philosophy/Ethics/Theology','Philosophy/Ethics/Theology'), ('Anthropology/Psychology/Sociology','Anthropology/Psychology/Sociology'), ('History/Politics/Law','History/Politics/Law'), ('Agriculture/Energy/Industry','Agriculture/Energy/Industry'), ('Animal Science/Welfare','Animal Science/Welfare'), ('Ecology/Conservation','Ecology/Conservation'), ('Nature Writing/Art/Literary Criticism','Nature Writing/Art/Literary Criticism'), ('Education/Living','Education/Living')])
     link = StringField('Link', validators = [URL(), Optional()], filters = [lambda x: x or None])
+    DOI = StringField('DOI', validators = [Length(0,200)])
     submit = SubmitField('Submit')
 
 # Delete literature
