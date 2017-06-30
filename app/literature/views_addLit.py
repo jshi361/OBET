@@ -39,12 +39,15 @@ def addLit():
 				lit = Lit.objects(refType__iexact = entry[0], title__iexact = entry[2]).first()
 				if lit is not None:
 					flash("Entry " + str(current_item) + " is already in the database.")
-				elif len(entry) < 18:
-					flash("Entry number " + str(current_item) + " is incomplete.")
+				#elif len(entry) < 17:
+					#flash("Entry number " + str(current_item) + " is incomplete.")
 				else:
 					count=count+1
 					for x in range(0,17):
-						entry[x].strip()
+						if entry[x] == None:
+							entry[x] = " "
+						else:
+							entry[x].strip()
 					lit = Lit(refType = entry[0], author = entry[1], title = entry[2], pages = entry[10], primaryField = entry[14], creator = current_user.name)
 					lit.save()
 					lit.update(set__yrPublished = entry[3])
