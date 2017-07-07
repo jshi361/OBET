@@ -31,12 +31,13 @@
 			</ul>
 		{% else %} None {% endif %}
 		</p>
-		<p>{% if lit.abstract %}<b>Abstract: </b>{{ lit.abstract }}{% endif %}</p>
-		<p>{% if lit.notes %}<b>Notes: </b>{{ lit.notes }}{% endif %}</p>
-		<p>{% if lit.primaryField %}<b>Primary Field: </b>{{ lit.primaryField }}{% endif %}</p>
-		<p>{% if lit.secondaryField %}<b>Secondary Field: </b>{{ lit.secondaryField }}{% endif %}</p>
+		<p><b>Abstract: </b>{% if lit.abstract %}{{ lit.abstract }}{% endif %}</p>
+		<p><b>Notes: </b>{% if lit.notes %}{{ lit.notes }}{% endif %}</p>
+		<p><b>Primary Field: </b>{% if lit.primaryField %}{{ lit.primaryField }}{% endif %}</p>
+		<p><b>Secondary Field: </b>{% if lit.secondaryField %}{{ lit.secondaryField }}{% endif %}</p>
 		<p>
-		<p>{% if lit.link %}<b>Link: </b><a href="{{ lit.link }}">{{ lit.link }}</a>{% endif %}</p>
+		<p><b>Link: </b><a href="{{ lit.link }}">{% if lit.link %}{{ lit.link }}{% endif %}</a></p>
+		<p><b>DOI: </b>{% if lit.DOI %}{{ lit.DOI }}{% endif %}</p
 		<p>
 			<b>Creator: </b>{{ lit.creator }} <br> &nbsp;&nbsp;on {{ lit.created_date}}
 		</p>
@@ -48,15 +49,15 @@
 		<!-- If user is admin, they can delete the item -->
 		{% if current_user.is_administrator() %}
 		<p>
-			<a href="{{ url_for('lit.deleteLit', lit_id = lit.id) }}">
-				<button type="button">Delete</button></a>
+			<a href="{{ url_for('lit.deleteLit') }}">
+				<input class="btn btn-danger" type="submit" name="delete" value="Delete"/></a>
 		</p>
 		{% endif %}
 		<!-- If user is logged in, they can edit the item -->
 		{% if current_user.is_authenticated() %}
 		<p>
 			<a href="{{ url_for('lit.updateLit', lit_id = lit.id) }}">
-				<button type="button">Update</button></a>
+				<input class="btn btn-info" type="submit" name="update" value="Update"/></a>
 		</p>
 		{% endif %}
 	</div>
