@@ -36,56 +36,56 @@ def addLit():
 				current_item = current_item+1
 				entry = line.split('\t')
 				type(entry)
-				#lit = Lit.objects(refType__iexact = entry[0], title__iexact = entry[2]).first()
-				#if lit is not None:
-					#flash("Entry " + str(current_item) + " is already in the database.")
+				lit = Lit.objects(refType__iexact = entry[0], title__iexact = entry[2]).first()
+				if lit is not None:
+					flash("Entry " + str(current_item) + " is already in the database.")
 				#elif len(entry) < 17:
 					#flash("Entry number " + str(current_item) + " is incomplete.")
-				#else:
+				else:
 
-				count=count+1
-				for x in range(0,17):
-					if entry[x] == None:
-						entry[x] = " "
-					else:
-						entry[x].strip()
-				lit = Lit(refType = entry[0], author = entry[1], title = entry[2], pages = entry[10], primaryField = entry[14], creator = current_user.name)
-				lit.save()
-				lit.update(set__yrPublished = entry[3])
-				lit.update(set__sourceTitle = entry[4])
-				lit.update(set__editor = entry[5])
-				lit.update(set__placePublished = entry[6])
-				lit.update(set__publisher = entry[7])
-				lit.update(set__volume = entry[8])
-				lit.update(set__number = entry[9])
-				lit.update(set__abstract = entry[12])
-				lit.update(set__notes = entry[13])
-				lit.update(set__secondaryField = entry[15])
-				lit.update(set__DOI = entry[17])
+					count=count+1
+					for x in range(0,17):
+						if entry[x] == None:
+							entry[x] = " "
+						else:
+							entry[x].strip()
+					lit = Lit(refType = entry[0], author = entry[1], title = entry[2], pages = entry[10], primaryField = entry[14], creator = current_user.name)
+					lit.save()
+					lit.update(set__yrPublished = entry[3])
+					lit.update(set__sourceTitle = entry[4])
+					lit.update(set__editor = entry[5])
+					lit.update(set__placePublished = entry[6])
+					lit.update(set__publisher = entry[7])
+					lit.update(set__volume = entry[8])
+					lit.update(set__number = entry[9])
+					lit.update(set__abstract = entry[12])
+					lit.update(set__notes = entry[13])
+					lit.update(set__secondaryField = entry[15])
+					lit.update(set__DOI = entry[17])
 
-				# If the link field is not empty, save the link too
-				# If statement is done because update fails when attempting to save an empty string
-				if form.link.data is not None:
-					lit.update(set__link = entry[16])
+					# If the link field is not empty, save the link too
+					# If statement is done because update fails when attempting to save an empty string
+					if form.link.data is not None:
+						lit.update(set__link = entry[16])
 
-				# Add keywords into the db as a listField
-				keywordslist = entry[11].split(",")
-				for x in range(0, len(keywordslist)):
-					key = str(keywordslist[x].strip())
-					lit.update(push__keywords = key)
+					# Add keywords into the db as a listField
+					keywordslist = entry[11].split(",")
+					for x in range(0, len(keywordslist)):
+						key = str(keywordslist[x].strip())
+						lit.update(push__keywords = key)
 
-				editHist = LitEditRecord(lastUserEdited = current_user.name)
-				# Update lit history
-				lit.update(push__l_edit_record=editHist)
-				lit.update(set__last_edit = editHist)
-				lit.reload()
+					editHist = LitEditRecord(lastUserEdited = current_user.name)
+					# Update lit history
+					lit.update(push__l_edit_record=editHist)
+					lit.update(set__last_edit = editHist)
+					lit.reload()
 
-				# Update user edit history
-				userHist = UserEditRecord(litEdited = str(lit.id), operation = "add", litEditedTitle = lit.title)
-				current_user.update(push__u_edit_record = userHist)
-				current_user.reload()
-				lit = None
-				#flash("Successfully added!")
+					# Update user edit history
+					userHist = UserEditRecord(litEdited = str(lit.id), operation = "add", litEditedTitle = lit.title)
+					current_user.update(push__u_edit_record = userHist)
+					current_user.reload()
+					lit = None
+					#flash("Successfully added!")
 			flash("Upload Successful.")
 			return redirect(url_for('lit.addLit'))
 	else:
